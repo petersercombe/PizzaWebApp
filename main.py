@@ -12,6 +12,6 @@ def home():
 @app.route("/order")
 def order():
     collection = request.args["collection"]
-    return render_template("order.html", collection=collection)
+    return render_template("order.html", collection=collection, menu=menu)
 
 app.run(debug=True)
