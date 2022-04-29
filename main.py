@@ -1,4 +1,5 @@
 from flask import *
+from menu import *
 
 # Initialise the web app instance
 app = Flask(__name__)
