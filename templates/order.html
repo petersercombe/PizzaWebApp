@@ -19,7 +19,7 @@ Collection method: {{collection}}
         <p class="card-text">{{value['description']}}</p>
       </div>
       <div class="card-footer text-center">
-        <a href="#" class="btn btn-primary col-12">Add to cart</a>
+        <a href="/customise?collection={{collection}}&selection={{key}}" class="btn btn-primary col-12">${{value['price']}} | Add to cart</a>
       </div>
     </div>
   </div>
@@ -31,3 +31,6 @@ Collection method: {{collection}}
 
 
 {% endblock %}
+
+
+

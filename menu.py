@@ -20,6 +20,28 @@ menu = {"meatlovers":{"title":"BBQ Meatlovers",
                       "kj":4456,
                       "image":"pepporoni.webp"}
 
-
-
 }
+
+customisations = {"sizes":{"Small":-2.00,
+                           "Regular":0.00,
+                           "Family":5.00
+                           },
+                  "crusts":{"Thin":0.00,
+                            "Classic":0.00,
+                            "Deep Pan":0.00,
+                            "Cheesy Crust":1.95,
+                            "Gluten Free":2.95
+                            },
+                  "sauces":{"Tomato":0.00,
+                            "Creme Fraiche":1.00,
+                            "Hickory Barbeque":0.75,
+                            "Sezchaun Sauce":5.00
+                            },
+                  "extras":{"Anchovies":2.00,
+                            "Rasher Bacon":2.00,
+                            "Italian Sausage":2.00,
+                            "Chilli Flakes":0.00,
+                            "Spring Onion":0.50,
+                            "Vegan Cheese (Swap)":1.00
+                            }
+                  }
