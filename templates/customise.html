@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}Customise Order{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-4">
+            <img src="../static/{{menu[selection]['image']}}" class="img-thumbnail" alt="{{menu[selection]['description']}}">
+            {{menu[selection]['kj']}} kJ*
+
+            disclaimer
+        </div>
+        <div class="col-8">
+
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
