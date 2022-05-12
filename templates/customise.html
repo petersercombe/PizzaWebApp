@@ -8,12 +8,38 @@
     <div class="row">
         <div class="col-4">
             <img src="../static/{{menu[selection]['image']}}" class="img-thumbnail" alt="{{menu[selection]['description']}}">
-            {{menu[selection]['kj']}} kJ*
+            <small class="text-muted">{{menu[selection]['kj']}} kJ*<br>
+            *The average adult needs about 8700 kilojoules (kJ) a day to maintain a healthy weight.</small>
 
-            disclaimer
         </div>
         <div class="col-8">
+            <form action="/cart" method="post">
+                <fieldset disabled>
+                <div class="mb-3">
+                  <label for="selection" class="form-label">Selection:</label>
+                  <input type="text" id="selection" class="form-control" name="selection" placeholder="{{menu[selection]['title']}}" value="{{selection}}">
+                </div>
+                </fieldset>
 
+                <div class="mb-3">
+                  <label for="size" class="form-label">Size:</label>
+                    <select id="size" name="size" class="form-select" aria-label="Default select example">
+                        {% for title, price in customisations['sizes'].items() %}
+                        <option value="{{title}}">{{title}}
+                            {% if price != 0.0 %}
+                            {{ " (+${:.2f})".format(price) }}
+                            {% endif %}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+            crusts
+
+            sauces
+
+            extras - radio check buttons
+            </form>
         </div>
     </div>
 </div>
