@@ -4,6 +4,8 @@ from menu import *
 # Initialise the web app instance
 app = Flask(__name__)
 
+orderData = {}
+
 @app.route("/")
 @app.route("/home")
 def home():
@@ -23,6 +25,18 @@ def customise():
                            menu=menu,
                            customisations=customisations,
                            selection=selection)
+
+
+@app.route("/cart")
+def cartView():
+    return render_template("cart.html", orderData=orderData) # lots to do here
+
+
+@app.route("/cart", methods = ["post"])
+def cartPost():
+    orderData[len(orderData)] = request.form
+    print(orderData)
+    return redirect("/cart")
 
 
 app.run(debug=True)
