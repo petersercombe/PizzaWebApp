@@ -22,8 +22,8 @@ menu = {"meatlovers":{"title":"BBQ Meatlovers",
 
 }
 
-customisations = {"sizes":{"Small":-2.00,
-                           "Regular":0.00,
+customisations = {"sizes":{"Small":0.00,
+                           "Regular":2.00,
                            "Family":5.00
                            },
                   "crusts":{"Thin":0.00,
