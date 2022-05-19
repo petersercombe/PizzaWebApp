@@ -7,6 +7,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-6">
+            <h2>{{menu[selection]['title']}}</h2>
             <img src="../static/{{menu[selection]['image']}}" class="img-thumbnail" alt="{{menu[selection]['description']}}">
             <small class="text-muted">{{menu[selection]['kj']}} kJ*<br>
             *The average adult needs about 8700 kilojoules (kJ) a day to maintain a healthy weight.</small>
@@ -16,8 +17,7 @@
             <form action="/cart" method="post">
                 <!-- Pizza Selection -->
                 <div class="mb-3">
-                  <label for="selection" class="form-label">Selection:</label>
-                  <input type="text" id="selection" class="form-control" name="selection" placeholder="{{menu[selection]['title']}}" value="{{selection}}">
+                  <input type="hidden" id="selection" class="form-control" name="selection" value="{{selection}}">
                 </div>
                 <!-- Sizes selection -->
                 <div class="mb-3">

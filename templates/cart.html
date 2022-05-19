@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+
+{% for key, order in orderData.items() %}
+    {{ value }}
+
+<div class="card w-75">
+  <div class="card-body">
+    <h5 class="card-title"> {{ order.selection }} </h5>
+      <p class="card-text">
+      <ul>
+          <li>Size: {{order.size}}</li>
+          <li>Crust: {{order.crust}}</li>
+          <li>Sauce: {{order.sauce}}</li>
+      </ul>
+      </p>
+    <a href="/remove/{{key}}" class="btn btn-primary">Remove</a>
+  </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}

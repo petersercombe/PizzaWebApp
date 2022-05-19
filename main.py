@@ -34,9 +34,14 @@ def cartView():
 
 @app.route("/cart", methods = ["post"])
 def cartPost():
-    orderData[len(orderData)] = request.form
+    orderData[str(len(orderData))] = request.form.to_dict()
     print(orderData)
     return redirect("/cart")
 
+@app.route("/remove/<key>")
+def remove(key):
+    orderData.pop(key)
+    return redirect("/cart")
 
-app.run(debug=True)
+
+app.run(debug=True, host='0.0.0.0')
