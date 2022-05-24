@@ -29,7 +29,7 @@ def customise():
 
 @app.route("/cart")
 def cartView():
-    return render_template("cart.html", orderData=orderData) # lots to do here
+    return render_template("cart.html", orderData=orderData, menu=menu) # lots to do here
 
 
 @app.route("/cart", methods = ["post"])
@@ -44,4 +44,4 @@ def remove(key):
     return redirect("/cart")
 
 
-app.run(debug=True, host='0.0.0.0')
+app.run(debug=True)
