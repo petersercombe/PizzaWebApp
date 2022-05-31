@@ -4,21 +4,26 @@ from menu import *
 # Initialise the web app instance
 app = Flask(__name__)
 app.secret_key = "AnythingYouWant"
-# orderData = {}
+
+
 
 @app.route("/")
 @app.route("/home")
 def home():
+    if "orderData" not in session: session["orderData"] = {}
+    session.modified = True
     return render_template("index.html")
 
 @app.route("/order")
 def order():
+    if "orderData" not in session: return redirect("/")
     session["orderData"]["collection"] = request.args["collection"]
     session.modified = True
     return render_template("order.html", collection=session["orderData"]["collection"], menu=menu)
 
 @app.route("/customise")
 def customise():
+    if "orderData" not in session: return redirect("/")
     session["orderData"]["selection"] = request.args["selection"]
     return render_template("customise.html",
                            collection=session["orderData"]["collection"],
@@ -29,11 +34,13 @@ def customise():
 
 @app.route("/cart")
 def cartView():
+    if "orderData" not in session: return redirect("/")
     return render_template("cart.html", orderData=session["orderData"], menu=menu) # lots to do here
 
 
 @app.route("/cart", methods = ["post"])
 def cartPost():
+    if "orderData" not in session: return redirect("/")
     session["orderData"][str(len(session["orderData"]))] = request.form.to_dict()
     session.modified = True
     print(session["orderData"])
@@ -41,6 +48,7 @@ def cartPost():
 
 @app.route("/remove/<key>")
 def remove(key):
+    if "orderData" not in session: return redirect("/")
     session["orderData"].pop(key)
     session.modified = True
     return redirect("/cart")
