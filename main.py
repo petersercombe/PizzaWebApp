@@ -10,8 +10,9 @@ app.secret_key = "AnythingYouWant"
 @app.route("/")
 @app.route("/home")
 def home():
-    if "orderData" not in session: session["orderData"] = {}
+    if "orderData" not in session: session["orderData"] = {}; session["price"] = 0.00
     session.modified = True
+    print(session["price"])
     return render_template("index.html")
 
 @app.route("/order")
@@ -42,8 +43,16 @@ def cartView():
 def cartPost():
     if "orderData" not in session: return redirect("/")
     session["orderData"][str(len(session["orderData"]))] = request.form.to_dict()
+    session["price"] += menu[request.form["selection"]]["price"]
+    session["price"] += customisations["sizes"][request.form["size"]]
+    session["price"] += customisations["crusts"][request.form["crust"]]
+    session["price"] += customisations["sauces"][request.form["sauce"]]
+    for key, value in request.form.to_dict().items():
+        if key.startswith("extra"):
+            session["price"] += customisations["extras"][request.form[key]]
+    print(session["price"])
+    # ToDo: Store price specifically with this pizza order so it can be subtracted from the total when removed from the cart.
     session.modified = True
-    print(session["orderData"])
     return redirect("/cart")
 
 @app.route("/remove/<key>")
