@@ -5,21 +5,30 @@
 {% block content %}
 
 {% for key, order in orderData.items() %}
-    {{ value }}
+
+{% if key != "collection" %}
 
 <div class="card w-75">
   <div class="card-body">
-    <h5 class="card-title"> {{ order.selection }} </h5>
+    <h5 class="card-title"> {{ menu[order.selection]["title"] }} </h5>
       <p class="card-text">
       <ul>
-          <li>Size: {{order.size}}</li>
-          <li>Crust: {{order.crust}}</li>
-          <li>Sauce: {{order.sauce}}</li>
+        <li>Size: {{order.size}}</li>
+        <li>Crust: {{order.crust}}</li>
+        <li>Sauce: {{order.sauce}}</li>
+        {% for field in order %}
+        {% if field.startswith("extra") %}
+        <li>Extra: {{ order[field] }}</li>
+        {% endif %}
+        {% endfor %}
+
       </ul>
       </p>
     <a href="/remove/{{key}}" class="btn btn-primary">Remove</a>
   </div>
 </div>
+
+{% endif %}
 
 {% endfor %}
 
