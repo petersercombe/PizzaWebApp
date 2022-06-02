@@ -4,11 +4,20 @@
 
 {% block content %}
 
+{% set ns = namespace(totalPrice=0) %}
+<div class="btn-group d-md-flex col-10 mx-auto" role="group">
+    <a type="button" href="/order?collection={{orderData.collection}}" class="btn btn-success btn-lg">Add More Pizza</a>
+  </div>
+<br>
+<div class="row">
+
+<div class="col-lg-8">
+
 {% for key, order in orderData.items() %}
 
 {% if key != "collection" %}
 
-<div class="card w-75">
+<div class="card w-100">
   <div class="card-body">
     <h5 class="card-title"> {{ menu[order.selection]["title"] }} </h5>
       <p class="card-text">
@@ -23,6 +32,10 @@
         {% endfor %}
 
       </ul>
+      Cost: {{ "${:.2f}".format(order.itemPrice) }}
+
+      {% set ns.totalPrice = ns.totalPrice + order.itemPrice %}
+
       </p>
     <a href="/remove/{{key}}" class="btn btn-primary">Remove</a>
   </div>
@@ -31,5 +44,24 @@
 {% endif %}
 
 {% endfor %}
+
+</div>
+
+  <div class="col-lg-4">
+    <div class="card w-100">
+      <div class="card-body">
+        <h5 class="card-title">Checkout</h5>
+        <p class="card-text">
+          Total: {{ "${:.2f}".format(ns.totalPrice) }}
+        </p>
+      </div>
+      <div class="card-footer">
+        <a href="#" class="btn btn-primary">Pay Now</a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
 
 {% endblock %}

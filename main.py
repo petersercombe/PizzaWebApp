@@ -6,13 +6,11 @@ app = Flask(__name__)
 app.secret_key = "AnythingYouWant"
 
 
-
 @app.route("/")
 @app.route("/home")
 def home():
-    if "orderData" not in session: session["orderData"] = {}; session["price"] = 0.00
+    if "orderData" not in session: session["orderData"] = {}
     session.modified = True
-    print(session["price"])
     return render_template("index.html")
 
 @app.route("/order")
@@ -36,22 +34,24 @@ def customise():
 @app.route("/cart")
 def cartView():
     if "orderData" not in session: return redirect("/")
-    return render_template("cart.html", orderData=session["orderData"], menu=menu) # lots to do here
+    return render_template("cart.html", orderData=session["orderData"], menu=menu)
 
 
 @app.route("/cart", methods = ["post"])
 def cartPost():
     if "orderData" not in session: return redirect("/")
-    session["orderData"][str(len(session["orderData"]))] = request.form.to_dict()
-    session["price"] += menu[request.form["selection"]]["price"]
-    session["price"] += customisations["sizes"][request.form["size"]]
-    session["price"] += customisations["crusts"][request.form["crust"]]
-    session["price"] += customisations["sauces"][request.form["sauce"]]
+    item = str(len(session["orderData"])) # Houston, we have a problem here.
+    session["orderData"][item] = request.form.to_dict()
+    itemPrice = menu[request.form["selection"]]["price"]
+    itemPrice += customisations["sizes"][request.form["size"]]
+    itemPrice += customisations["crusts"][request.form["crust"]]
+    itemPrice += customisations["sauces"][request.form["sauce"]]
     for key, value in request.form.to_dict().items():
         if key.startswith("extra"):
-            session["price"] += customisations["extras"][request.form[key]]
-    print(session["price"])
-    # ToDo: Store price specifically with this pizza order so it can be subtracted from the total when removed from the cart.
+            itemPrice += customisations["extras"][request.form[key]]
+    session["orderData"][item]["itemPrice"] = itemPrice
+    print (session["orderData"])
+
     session.modified = True
     return redirect("/cart")
 
