@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block title %}Customise Order{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6">
+            <h2>{{menu[value.selection]['title']}}</h2>
+            <img src="../static/{{menu[value.selection]['image']}}" class="img-thumbnail" alt="{{menu[value.selection]['description']}}">
+            <small class="text-muted">{{menu[value.selection]['kj']}} kJ*<br>
+            *The average adult needs about 8700 kilojoules (kJ) a day to maintain a healthy weight.</small>
+
+        </div>
+        <div class="col-lg-6">
+            <form action="/cart" method="post">
+                <!-- Pizza Selection -->
+                <div class="mb-3">
+                  <input type="hidden" id="selection" class="form-control" name="selection" value="{{value.selection}}">
+                  <input type="hidden" id="item" class="form-control" name="item" value="{{key}}">
+                </div>
+                <!-- Sizes selection -->
+                <div class="mb-3">
+                  <label for="size" class="form-label">Size:</label>
+                    <select id="size" name="size" class="form-select" aria-label="Default select example">
+                        {% for title, price in customisations['sizes'].items() %}
+                        <option value="{{title}}" {% if title == value.size %} selected {% endif %}>
+                            {{title}}
+                            {% if price != 0.0 %}
+                            {{ " (+${:.2f})".format(price) }}
+                            {% endif %}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <!-- Crust selection -->
+                <div class="mb-3">
+                  <label for="crust" class="form-label">Crust:</label>
+                    <select id="crust" name="crust" class="form-select" aria-label="Default select example">
+                        {% for title, price in customisations['crusts'].items() %}
+                        <option value="{{title}}"{% if title == value.crust %} selected {% endif %}>
+                            {{title}}
+                            {% if price != 0.0 %}
+                            {{ " (+${:.2f})".format(price) }}
+                            {% endif %}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <!-- Sauce selection -->
+                <div class="mb-3">
+                  <label for="sauce" class="form-label">Sauce:</label>
+                    <select id="sauce" name="sauce" class="form-select" aria-label="Default select example">
+                        {% for title, price in customisations['sauces'].items() %}
+                        <option value="{{title}}" {% if title == value.sauce %} selected {% endif %}>{{title}}
+                            {% if price != 0.0 %}
+                            {{ " (+${:.2f})".format(price) }}
+                            {% endif %}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <!-- Extras selection - using radio buttons -->
+                <label class="form-label">Extras:</label>
+                <div class="container">
+                  <div class="row row-cols-lg-2"> <!-- This will place the buttons in 2 columns -->
+                    {% for title, price in customisations['extras'].items() %}
+                      <div class="col">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" name="extra{{loop.index}}" value="{{title}}" id="{{title}}" {% if title in value.values() %} checked {% endif %}>
+                          <small><label class="form-check-label" for="{{title}}">
+                              {{title}}
+                              {% if price != 0.0 %}
+                              {{ " (+${:.2f})".format(price) }}
+                              {% endif %}
+                          </label></small>
+                        </div>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <br>
+                <div class="d-grid gap-2 col-6">
+                    <button class="btn btn-primary" type="submit">Add to Cart</button>
+                </div>
+            </form>
+            <br>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

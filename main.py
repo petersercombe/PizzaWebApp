@@ -41,7 +41,10 @@ def cartView():
 @app.route("/cart", methods = ["post"])
 def cartPost():
     if "orderData" not in session: return redirect("/")
-    item = str(datetime.datetime.now()) # Houston, we have a problem here.
+    try:
+        item = request.form["item"]
+    except:
+        item = str(datetime.datetime.now())
     session["orderData"][item] = request.form.to_dict()
     itemPrice = menu[request.form["selection"]]["price"]
     itemPrice += customisations["sizes"][request.form["size"]]
@@ -69,5 +72,15 @@ def checkout():
     session.pop("orderData")
     return redirect("/")
 
+
+@app.route("/edit/<item>")
+def edit(item):
+    if "orderData" not in session: return redirect("/")
+    return render_template("edit.html",
+                           collection=session["orderData"]["collection"],
+                           menu=menu,
+                           customisations=customisations,
+                           value=session["orderData"][item],
+                           key=item)
 
 app.run(debug=True)

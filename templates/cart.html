@@ -17,7 +17,11 @@
 
 {% if key != "collection" %}
 
+
+
 <div class="card w-100">
+  <div class="row g-0">
+  <div class="col-md-9">
   <div class="card-body">
     <h5 class="card-title"> {{ menu[order.selection]["title"] }} </h5>
       <p class="card-text">
@@ -37,7 +41,13 @@
       {% set ns.totalPrice = ns.totalPrice + order.itemPrice %}
 
       </p>
-    <a href="/remove/{{key}}" class="btn btn-primary">Remove</a>
+    <a href="/edit/{{key}}" class="btn btn-primary">Edit</a>
+    <a href="/remove/{{key}}" class="btn btn-danger">Remove</a>
+  </div>
+  </div>
+  <div class="col-md-3">
+    <img class="card-img" src="../static/{{ menu[order.selection]['image'] }}" alt="Card image">
+  </div>
   </div>
 </div>
 
