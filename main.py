@@ -1,5 +1,6 @@
 from flask import *
 from menu import *
+import datetime
 
 # Initialise the web app instance
 app = Flask(__name__)
@@ -40,7 +41,7 @@ def cartView():
 @app.route("/cart", methods = ["post"])
 def cartPost():
     if "orderData" not in session: return redirect("/")
-    item = str(len(session["orderData"])) # Houston, we have a problem here.
+    item = str(datetime.datetime.now()) # Houston, we have a problem here.
     session["orderData"][item] = request.form.to_dict()
     itemPrice = menu[request.form["selection"]]["price"]
     itemPrice += customisations["sizes"][request.form["size"]]
@@ -61,6 +62,12 @@ def remove(key):
     session["orderData"].pop(key)
     session.modified = True
     return redirect("/cart")
+
+
+@app.route("/checkout")
+def checkout():
+    session.pop("orderData")
+    return redirect("/")
 
 
 app.run(debug=True)
